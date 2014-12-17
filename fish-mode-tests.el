@@ -57,7 +57,7 @@ end
             :exercise (lambda ()
                         (fish-mode)
                         (newline-and-indent))))
-)
+  )
 
 (ert-deftest fish-tests-indent-multiline-function-body ()
   ""
