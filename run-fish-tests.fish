@@ -2,8 +2,11 @@
 
 set -l OUTPUT /tmp/fish-shell-tests-output.txt
 
+# Install dependencies via Cask
+cask install
+
 # Run the tests
-emacs --batch --load ert-bootstrap.el --load ./fish-mode-tests.el -f ert-run-tests-batch-and-exit 2>$OUTPUT
+cask exec ert-runner -L .
 
 if test $status = 0
     echo "Success -- All tests passed"

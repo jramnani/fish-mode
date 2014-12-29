@@ -1,9 +1,12 @@
+;;; fish-mode-test.el -- Fish mode test suite
+
+;;; Commentary
+;;
+
+;;; Code:
+
 (require 'ert)
 (require 'fish-mode)
-
-;; For testing indentation
-(use-package cursor-test
-  :ensure t)
 
 ;; Borrowed from Emacs' internal tests for python-mode
 (defmacro fish-tests-with-temp-buffer (contents &rest body)
@@ -73,3 +76,5 @@ function foo
     echo hello world
 end
 |"))
+
+;; fish-mode-test.el ends here
