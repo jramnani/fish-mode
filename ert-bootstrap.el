@@ -14,5 +14,8 @@
 
 ;; Don't use tabs
 (setq-default indent-tabs-mode nil)
+;; My tests currently assume a tab-width of 4
+(setq-default default-tab-width 4)
+
 (require 'ert)
 (require 'fish-mode)
