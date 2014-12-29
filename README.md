@@ -2,11 +2,11 @@
 
 An Emacs major mode for editing [Fish shell](http://fishshell.com/) scripts.
 
-Provides font-locking, and indentation support.
+Provides font-locking and indentation support.
 
 **Current status:** Experimental.
 
-* Indentation doesn't work right, yet.  Still learning how to use the
+* Indentation doesn't work.  Still learning how to use the
 indentation engine, [SMIE](https://www.gnu.org/software/emacs/manual/html_node/elisp/SMIE.html#SMIE).
 * Font locking could be better. Currently, all builtin commands use the same
 font face.
