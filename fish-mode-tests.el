@@ -40,44 +40,18 @@ always located at the beginning of buffer."
 
 
 (ert-deftest fish-tests-should-indent-function-body ()
-  "First use of cursor-test to test indentation and cursor position"
-  (cursor-test/equal
-   :description "Test indentation of simple function body"
-   :expect (cursor-test/setup
-            :init "
-function foo
-    |
-end
-")
-   :actual (cursor-test/setup
-            :init "
-function foo|
-end
-"
-            :exercise (lambda ()
-                        (fish-mode)
-                        (newline-and-indent))))
-  )
-
-(ert-deftest fish-tests-indent-multiline-function-body ()
-  ""
+  "Test simple indentation of a function body"
   (cursor-test/equal*
-   :description "Test indentation of multi-line function body"
+   :description "Test indentation of simple function body"
    :init "
 function foo|
 end
 "
    :exercise (lambda ()
-                (fish-mode)
-                (newline-and-indent)
-                (insert "echo hello world")
-                (newline-and-indent)
-                (insert "echo bar baz")
-                (newline-and-indent))
+               (fish-mode)
+               (newline-and-indent))
    :expect "
 function foo
-    echo hello world
-    echo bar baz
     |
 end
 "))
