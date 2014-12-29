@@ -1,3 +1,23 @@
+;;; fish-mode.el --- Major mode for editing Fish shell scripts
+
+;; Copyright (C) 2014 Jeff Ramnani
+
+;; Author: Jeff Ramnani <jeff@jefframnani.com>
+;; Created: 29 Dec 2014
+;; Keywords: languages
+;; Homepage: https://github.com/jramnani/fish-mode
+;; Package-Version: 0.1.0
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software.  You can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 2 of the License, or
+;; (at your option) any later version.
+
+
+;;; Code
+
 (defvar fish-builtin-commands
   '("alias" "and"
     "begin" "bg" "bind" "block" "break" "breakpoint" "builtin"
