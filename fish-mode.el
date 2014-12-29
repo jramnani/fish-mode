@@ -69,18 +69,6 @@ debug messages to the *Messages* buffer."
   :safe 'booleanp)
 
 
-(defconst fish-indent-begin-keywords
-  '("function")
-  "Keywords that begin an indentation block scope.")
-
-(defconst fish-indent-begin-re
-  (regexp-opt fish-indent-begin-keywords 'symbols)
-  "Regexp that matches beginning of indentation blocks")
-
-(defconst fish-indent-end-re
-  "\\_<end\\_>"
-  "Regexp that matches the end of indentation block")
-
 (require 'smie)
 
 ;; Grammar
@@ -141,7 +129,6 @@ debug messages to the *Messages* buffer."
        fish-smie-indent-basic))
     (`(,_ . ,(or ",")) (smie-rule-separator kind))
     (`(:after . "end") 0)
-    (`(:list-intro . ,(or `"function")) nil)
     (`(:before . "if")
      (and (not (smie-rule-bolp))
           (smie-rule-prev-p "else")
