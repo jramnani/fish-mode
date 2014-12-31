@@ -75,11 +75,11 @@
 
 ;; Indentation
 
-(defcustom fish-indent-offset 4
-  "Default indentation offset for Fish."
-  :group 'fish
-  :type 'integer
-  :safe 'integerp)
+(defcustom fish-smie-indent-basic 4
+   "Indentation level for Fish shell's SMIE configuration"
+   :group 'fish
+   :type 'integer
+   :safe 'integerp)
 
 (defcustom fish-indent-debug nil
   "Setting to true value will cause the indentation enging to print
@@ -135,12 +135,6 @@ debug messages to the *Messages* buffer."
           (point))))))
 
 ;; Indentation rules
-(defcustom fish-smie-indent-basic 4
-   "Indentation level for Fish shell's SMIE configuration"
-   :group 'fish
-   :type 'integer
-   :safe 'integerp)
-
 (defun fish-smie-rules (kind token)
   (pcase (cons kind token)
     (`(:elem . basic)
