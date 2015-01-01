@@ -113,6 +113,12 @@ debug messages to the *Messages* buffer."
 (defun fish-smie-forward-token ()
   (forward-comment (point-max))
   (cond
+   ;; If there is nothing but whitespace between the last token and eol,
+   ;; emit a semicolon to close the statement.
+   ;; This prevent rules from "hanging".
+   ((looking-at (rx (and (1+ space) eol)))
+    (goto-char (match-end 0))
+    ";")
    ((looking-at fish-builtin-commands-re)
     (goto-char (match-end 0))
     (match-string-no-properties 0))
@@ -123,24 +129,37 @@ debug messages to the *Messages* buffer."
          (point))))))
 
 (defun fish-smie-backward-token ()
-  (forward-comment (- (point)))
-  (cond
-   ((looking-back fish-builtin-commands-re (- (point) 2) t)
-    (goto-char (match-beginning 0))
-    (match-string-no-properties 0))
-   (t (buffer-substring-no-properties
-        (point)
-        (progn
-          (skip-syntax-backward "w_.")
-          (point))))))
+  (let ((pos (point)))
+    (forward-comment (- (point)))
+    (cond
+     ;; Emit an implicit semicolon to prevent a rule from "hanging"
+     ((> pos (line-end-position))
+      ";")
+     ((looking-back fish-builtin-commands-re (- (point) 2) t)
+      (goto-char (match-beginning 0))
+      (match-string-no-properties 0))
+     (t (buffer-substring-no-properties
+         (point)
+         (progn
+           (skip-syntax-backward "w_.")
+           (point)))))))
 
 ;; Indentation rules
 (defun fish-smie-rules (kind token)
   (pcase (cons kind token)
-    (`(:elem . basic)
-     (if (smie-rule-hanging-p)
-         0
-       fish-smie-indent-basic))
+    (`(:elem . basic) fish-smie-indent-basic)
+    (`(:before . ";")
+     (cond
+      ((smie-rule-parent-p "begin" "function")
+       (smie-rule-parent fish-smie-indent-basic))))
+    (`(:after . ";")
+     (cond
+      ((smie-rule-parent-p "function")
+       (smie-rule-parent))
+      (t
+       (if (smie-rule-hanging-p)
+           (smie-rule-parent)
+         (smie-rule-parent fish-smie-indent-basic)))))
     (`(,_ . ,(or ",")) (smie-rule-separator kind))
     (`(:after . "end") 0)
     (`(:before . "if")

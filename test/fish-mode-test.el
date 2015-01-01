@@ -48,7 +48,6 @@ always located at the beginning of buffer."
    :description "Test indentation of simple function body"
    :init "
 function foo|
-end
 "
    :exercise (lambda ()
                (fish-mode)
@@ -56,7 +55,6 @@ end
    :expect "
 function foo
     |
-end
 "))
 
 (ert-deftest fish-tests-should-unindent-after-function-body ()
