@@ -57,6 +57,24 @@ function foo
     |
 "))
 
+(ert-deftest fish-tests-should-indent-inside-function-body ()
+  "Given a function, hitting TAB in the body should indent by fish-smie-indent-basic"
+  (cursor-test/equal*
+   :description "Given a function, hitting TAB in the body should indent by fish-smie-indent-basic"
+   :init "
+function foo
+|
+end
+"
+   :exercise (lambda ()
+               (fish-mode)
+               (indent-for-tab-command))
+   :expect "
+function foo
+    |
+end
+"))
+
 (ert-deftest fish-tests-should-unindent-after-function-body ()
   ""
   (cursor-test/equal*
